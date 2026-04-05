@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>{{ app_name }}</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="{{ url_for('static', path='styles.css') }}">
+</head>
+<body>
+	{% set feature_descriptions = {
+		'TextAI': 'Draft, rewrite, summarize, and explain business content.',
+		'TextToimageAI': 'Inspect uploaded visuals and extract scene details.',
+		'WikiAI': 'Turn rough notes into structured internal knowledge.',
+		'JiraAI': 'Generate implementation-ready stories and acceptance criteria.',
+		'ConfluenceAI': 'Format updates, decisions, and rollout notes cleanly.',
+		'Sentiment AnalysisAI': 'Classify tone, emotion, and customer intent.',
+		'ChatbotAI': 'Upload documents, index them in Chroma, and chat with RAG.'
+	} %}
+	{% set feature_labels = {
+		'TextAI': 'Ask Anything',
+		'TextToimageAI': 'Image Insight',
+		'Sentiment AnalysisAI': 'Sentiment Pulse',
+		'ChatbotAI': 'Knowledge Chat'
+	} %}
+	{% set hidden_menu_features = ['WikiAI', 'JiraAI', 'ConfluenceAI'] %}
+	{% set visible_menu_features = features | reject('in', hidden_menu_features) | list %}
+	{% set default_feature = 'ChatbotAI' %}
+	<div class="app-shell">
+		<aside class="sidebar">
+			<div class="brand-block">
+				<div class="brand-mark">OneAI</div>
+				<div>
+					<!-- <p class="eyebrow">FastAPI + Databricks</p> -->
+					<h1>{{ app_name }}</h1>
+					<p class="subtitle">AI, all in one place.</p>
+				</div>
+			</div>
+
+			<section class="sidebar-summary">
+				<div>
+					<span class="summary-value">7</span>
+					<span class="summary-label">AI modules</span>
+				</div>
+				<div>
+					<span class="summary-value">1</span>
+					<span class="summary-label">single-page flow</span>
+				</div>
+				<div>
+					<span class="summary-value">RAG</span>
+					<span class="summary-label">Chroma-backed chat</span>
+				</div>
+			</section>
+
+			<!-- <section class="sidebar-section">
+				<p class="section-title">Workspace modules</p>
+				<p class="section-copy">Select a workflow to open its form, action controls, and result area inside the same application shell.</p>
+			</section> -->
+
+			<nav class="menu" aria-label="AI features">
+				{% for feature in visible_menu_features %}
+				<button class="menu-item{% if feature == default_feature %} active{% endif %}" data-target="{{ feature|lower|replace(' ', '-') }}">
+					<span class="menu-item-title">{{ feature_labels.get(feature, feature) }}</span>
+					<span class="menu-item-copy">{{ feature_descriptions.get(feature, 'AI workflow') }}</span>
+				</button>
+				{% endfor %}
+			</nav>
+
+			<!-- <section class="sidebar-section muted-surface">
+				<p class="section-title">Platform notes</p>
+				<ul class="sidebar-list">
+					<li>Databricks serves the chat, text, and vision requests.</li>
+					<li>Uploaded documents are chunked and stored in Chroma DB.</li>
+					<li>Each workflow keeps results inside the current panel.</li>
+				</ul>
+			</section> -->
+
+			<!-- <section class="status-card">
+				<p class="status-label">Databricks setup</p>
+				<p>Configure <strong>DATABRICKS_HOST</strong>, <strong>DATABRICKS_TOKEN</strong>, and serving endpoint names in <strong>.env</strong> before sending requests.</p>
+			</section> -->
+		</aside>
+
+		<main class="content">
+
+			<!-- sanjeev hide this <section class="hero1">
+				<div class="hero-copy">
+					<p class="eyebrow">Presentation-ready AI workspace</p>
+					<h2>Show text, image, sentiment, and knowledge workflows from one polished control surface.</h2>
+					<p class="hero-text">Built for demos and day-to-day use, the interface now leads with higher-contrast storytelling, cleaner workflow grouping, and a stronger knowledge-chat experience.</p>
+					<div class="hero-actions">
+						<span class="hero-pill">Databricks endpoints</span>
+						<span class="hero-pill">FastAPI backend</span>
+						<span class="hero-pill">Chroma vector store</span>
+						<span class="hero-pill">Live source connectors</span>
+					</div>
+				</div>
+				<div class="hero-side">
+					<div class="hero-note">
+						<span class="dot"></span>
+						<p>Knowledge Chat is the strongest demo path: it combines RAG, live source routing, and a guided conversation layout in one flow.</p>
+					</div>
+					<div class="hero-spotlight">
+						<p class="hero-spotlight-label">Demo spotlight</p>
+						<h3>Lead with Knowledge Chat</h3>
+						<p>Start with the connected chatbot to show live retrieval, indexed documents, and grounded answers before moving into single-task tools.</p>
+						<div class="hero-spotlight-grid">
+							<div>
+								<span class="spotlight-value">RAG</span>
+								<span class="spotlight-label">indexed docs</span>
+							</div>
+							<div>
+								<span class="spotlight-value">Wiki</span>
+								<span class="spotlight-label">connected knowledge</span>
+							</div>
+						</div>
+					</div>
+					<div class="hero-metrics">
+						<div class="metric-card">
+							<span class="metric-value">PDF, DOCX</span>
+							<span class="metric-label">ready-to-index inputs</span>
+						</div>
+						<div class="metric-card">
+							<span class="metric-value">Vision</span>
+							<span class="metric-label">presentation-friendly insight</span>
+						</div>
+					</div>
+				</div>
+			</section> -->
+
+			<section class="showcase-strip" aria-label="Highlighted workflows">
+				<article class="showcase-card accent-a">
+					<p class="showcase-label">Conversational AI</p>
+					<h3>Ask Anything</h3>
+					<p>Open-ended drafting, rewrite, and explanation support for quick demo prompts.</p>
+				</article>
+				<article class="showcase-card accent-b">
+					<p class="showcase-label">Vision workflow</p>
+					<h3>Image Insight</h3>
+					<p>Upload a visual and show scene understanding, object cues, and content interpretation.</p>
+				</article>
+				<article class="showcase-card accent-c">
+					<p class="showcase-label">Grounded answers</p>
+					<h3>Knowledge Chat</h3>
+					<p>Combine indexed files and connected sources for grounded responses with visible provenance.</p>
+				</article>
+			</section>
+
+			<section class="panel" id="textai">
+				<div class="panel-header">
+					<div>
+						<p class="eyebrow">Ask Anything</p>
+						<h3>Open prompt workspace</h3>
+					</div>
+					<p>Use a flexible text assistant for fast drafting, explanation, and transformations.</p>
+				</div>
+				<div class="panel-banner">
+					<span class="panel-banner-label">Recommended use</span>
+					<p>Use this module for summarization, drafting, rewriting, release note creation, or quick knowledge transformation tasks.</p>
+				</div>
+				<form class="task-form" data-endpoint="/api/tasks/TextAI">
+					<label for="textai-input">Prompt</label>
+					<textarea id="textai-input" name="text" placeholder="Ask for drafting, summarization, explanation, or transformation." required></textarea>
+					<button type="submit">Run Ask Anything</button>
+					<label for="textai-output">Response</label>
+					<textarea id="textai-output" class="output" readonly placeholder="Response appears here."></textarea>
+				</form>
+			</section>
+
+			<section class="panel" id="texttoimageai">
+				<div class="panel-header">
+					<div>
+						<p class="eyebrow">Image Insight</p>
+						<h3>Visual intelligence</h3>
+					</div>
+					<p>Enter instructions, upload an image, and extract image details using a Databricks vision endpoint.</p>
+				</div>
+				<div class="panel-banner">
+					<span class="panel-banner-label">Input pattern</span>
+					<p>Upload an image with a clear instruction such as object detection, scene explanation, document capture analysis, or UI interpretation.</p>
+				</div>
+				<form id="vision-form" class="task-form upload-form">
+					<label for="vision-prompt">Instruction</label>
+					<input id="vision-prompt" name="prompt" type="text" placeholder="Describe the image, detect objects, or summarize the scene." required>
+					<label for="vision-image">Browse image</label>
+					<input id="vision-image" name="image" type="file" accept="image/*" required>
+					<button type="submit">Analyze image</button>
+					<label for="vision-output">Image details</label>
+					<textarea id="vision-output" class="output" readonly placeholder="Image details appear here."></textarea>
+				</form>
+			</section>
+
+			<section class="panel" id="wikiai">
+				<div class="panel-header">
+					<div>
+						<p class="eyebrow">WikiAI</p>
+						<h3>Wiki-ready knowledge entry</h3>
+					</div>
+					<p>Turn raw notes into a structured wiki article style output.</p>
+				</div>
+				<div class="panel-banner">
+					<span class="panel-banner-label">Output style</span>
+					<p>Ideal for internal documentation, onboarding articles, architecture notes, and reusable knowledge entries.</p>
+				</div>
+				<form class="task-form" data-endpoint="/api/tasks/WikiAI">
+					<label for="wiki-input">Notes or topic</label>
+					<textarea id="wiki-input" name="text" placeholder="Paste notes or describe the topic to structure." required></textarea>
+					<button type="submit">Run WikiAI</button>
+					<label for="wiki-output">Result</label>
+					<textarea id="wiki-output" class="output" readonly></textarea>
+				</form>
+			</section>
+
+			<section class="panel" id="jiraai">
+				<div class="panel-header">
+					<div>
+						<p class="eyebrow">JiraAI</p>
+						<h3>Jira story builder</h3>
+					</div>
+					<p>Convert requirements into story text, acceptance criteria, and risks.</p>
+				</div>
+				<div class="panel-banner">
+					<span class="panel-banner-label">Best for</span>
+					<p>Create clean backlog items from raw requirements, support tickets, defect notes, or release planning discussions.</p>
+				</div>
+				<form class="task-form" data-endpoint="/api/tasks/JiraAI">
+					<label for="jira-input">Requirement details</label>
+					<textarea id="jira-input" name="text" placeholder="Describe the feature or bug fix request." required></textarea>
+					<button type="submit">Run JiraAI</button>
+					<label for="jira-output">Result</label>
+					<textarea id="jira-output" class="output" readonly></textarea>
+				</form>
+			</section>
+
+			<section class="panel" id="confluenceai">
+				<div class="panel-header">
+					<div>
+						<p class="eyebrow">ConfluenceAI</p>
+						<h3>Confluence page formatter</h3>
+					</div>
+					<p>Prepare project content in a Confluence-friendly structure.</p>
+				</div>
+				<div class="panel-banner">
+					<span class="panel-banner-label">Formatting focus</span>
+					<p>Generate clearer project updates, meeting summaries, implementation plans, and decision logs for internal sharing.</p>
+				</div>
+				<form class="task-form" data-endpoint="/api/tasks/ConfluenceAI">
+					<label for="confluence-input">Content</label>
+					<textarea id="confluence-input" name="text" placeholder="Paste draft content or meeting notes." required></textarea>
+					<button type="submit">Run ConfluenceAI</button>
+					<label for="confluence-output">Result</label>
+					<textarea id="confluence-output" class="output" readonly></textarea>
+				</form>
+			</section>
+
+			<section class="panel" id="sentiment-analysisai">
+				<div class="panel-header">
+					<div>
+						<p class="eyebrow">Sentiment AnalysisAI</p>
+						<h3>Sentiment classification</h3>
+					</div>
+					<p>Classify user feedback or comments with rationale.</p>
+				</div>
+				<div class="panel-banner">
+					<span class="panel-banner-label">Analysis scope</span>
+					<p>Useful for customer feedback, support messages, survey responses, and stakeholder commentary review.</p>
+				</div>
+				<form class="task-form" data-endpoint="/api/tasks/Sentiment AnalysisAI">
+					<label for="sentiment-input">Text for analysis</label>
+					<textarea id="sentiment-input" name="text" placeholder="Paste feedback, review text, or comments." required></textarea>
+					<button type="submit">Run Sentiment AnalysisAI</button>
+					<label for="sentiment-output">Result</label>
+					<textarea id="sentiment-output" class="output" readonly></textarea>
+				</form>
+			</section>
+
+			<section class="panel active" id="chatbotai">
+				<div class="panel-header">
+					<div>
+						<p class="eyebrow">ChatbotAI</p>
+						<h3>RAG and connected knowledge chatbot</h3>
+					</div>
+					<p>Use RAG for uploaded files or switch to live Wiki, Confluence, and Jira connections that fetch source data before answering.</p>
+				</div>
+				<div class="panel-banner">
+					<span class="panel-banner-label">RAG workflow</span>
+					<p>RAG indexes local documents in Chroma. Wiki, Confluence, and Jira modes search the selected live source and ground the answer in the retrieved results.</p>
+				</div>
+                <marquee class="marquee" behavior="scroll" direction="right" scrollamount="5"><span style="color:red"><b><i>Wiki, Confluence, and Jira — coming soon!</i></b></span>.</marquee>
+				<div class="source-switcher" role="radiogroup" aria-label="Chatbot data source">
+					<label class="source-option">
+						<input type="radio" name="chatbot-source" value="rag" checked>
+						<span>RAG</span>
+					</label>
+					<label class="source-option">
+						<input type="radio" name="chatbot-source" value="wiki" style="opacity: 0.5;cursor: not-allowed;">
+						<span>Wiki</span>
+					</label>
+					<label class="source-option">
+						<input type="radio" name="chatbot-source" value="confluence" style="opacity: 0.5;cursor: not-allowed;">
+						<span>Confluence</span>
+					</label>
+					<label class="source-option">
+						<input type="radio" name="chatbot-source" value="jira" style="opacity: 0.5;cursor: not-allowed;">
+						<span>Jira</span>
+					</label>
+				</div>
+				<div class="chatbot-layout">
+					<form id="chatbot-upload-form" class="task-form upload-form slim">
+						<label for="chatbot-file">Upload PDF or DOC/DOCX</label>
+						<input id="chatbot-file" name="file" type="file" accept=".pdf,.doc,.docx,.txt,.md" required>
+						<button type="submit">Index document</button>
+						<label for="chatbot-collection-select">Saved indexed documents</label>
+						<select id="chatbot-collection-select">
+							<option value="">Loading indexed documents...</option>
+						</select>
+						<button id="chatbot-refresh-collections" type="button">Refresh saved documents</button>
+						<label for="chatbot-collection">Collection ID</label>
+						<input id="chatbot-collection" type="text" readonly placeholder="Generated after upload">
+						<p id="chatbot-upload-status" class="helper-text">RAG is selected. Choose a saved indexed document or upload a new one.</p>
+					</form>
+
+					<div class="chat-card">
+						<div id="chat-log" class="chat-log">
+							<article class="message assistant">
+								<p>RAG is selected. Choose a saved indexed document or upload a new one, then ask questions about its content.</p>
+							</article>
+						</div>
+						<form id="chat-form" class="chat-form">
+							<input id="chat-question" type="text" placeholder="Ask something from the uploaded document." required>
+							<button type="submit">Send</button>
+						</form>
+						<p id="chat-sources" class="helper-text"></p>
+					</div>
+				</div>
+			</section>
+		</main>
+	</div>
+
+	<script src="{{ url_for('static', path='app.js') }}"></script>
+</body>
+</html>
