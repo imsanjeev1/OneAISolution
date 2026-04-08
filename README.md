@@ -77,3 +77,33 @@ You need three Databricks serving endpoints:
 - Confluence mode requires `CONFLUENCE_BASE_URL`, `CONFLUENCE_EMAIL`, and `CONFLUENCE_API_TOKEN`.
 - Jira mode requires `JIRA_BASE_URL`, `JIRA_EMAIL`, and `JIRA_API_TOKEN`.
 - `CONFLUENCE_SPACE_KEY` and `JIRA_PROJECT_KEY` are optional filters.
+
+# Env key details
+APP_NAME=Solution
+APP_ENV=development
+DATABRICKS_HOST=
+DATABRICKS_TOKEN=
+DATABRICKS_CHAT_MODEL=
+HUGGINGFACE_EMBEDDING_MODEL=
+DATABRICKS_IMAGE_DESCRIPTION_PROMPT= "Describe the image in detail in 200 words. Focus on subjects, objects, scene, layout, colors, text placement, style, and any relevant visual cues that help explain what the image is communicating. Return plain text only."
+CHROMA_DIR=data/chroma
+UPLOADS_DIR=data/uploads
+MAX_UPLOAD_BYTES=15728640
+# Wiki connector
+WIKI_API_URL=
+WIKI_TOKEN=
+WIKI_SEARCH_LIMIT=3
+
+# Confluence connector
+CONFLUENCE_BASE_URL=
+CONFLUENCE_EMAIL=
+CONFLUENCE_API_TOKEN=
+CONFLUENCE_SPACE_KEY=
+CONFLUENCE_SEARCH_LIMIT=3
+
+# Jira connector
+JIRA_BASE_URL=
+JIRA_EMAIL=
+JIRA_API_TOKEN=
+JIRA_PROJECT_KEY=
+JIRA_SEARCH_LIMIT=5
